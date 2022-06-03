@@ -1,5 +1,5 @@
 /**
-* react-lite-youtube-embed v2.1.3
+* react-lite-youtube-embed v2.2.2
 *  https://github.com/ibrahimcesar/react-lite-youtube-embed.git
 *
 *  Copyright (c) Ibrahim Cesar < email@ibrahimcesar.com > and project contributors.
@@ -11,47 +11,20 @@
 */
     import * as React from 'react';
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
 function LiteYouTubeEmbed(props) {
-    var _a = React.useState(false), preconnected = _a[0], setPreconnected = _a[1];
-    var _b = React.useState(false), iframe = _b[0], setIframe = _b[1];
+    var preconnected = React.useState(false)[0];
+    var iframe = React.useState(false)[0];
     var videoId = encodeURIComponent(props.id);
     var videoPlaylisCovertId = typeof props.playlistCoverId === 'string' ? encodeURIComponent(props.playlistCoverId) : null;
     var videoTitle = props.title;
     var posterImp = props.poster || "hqdefault";
-    var paramsImp = "&" + props.params || "";
+    var paramsImp = "&".concat(props.params) || "";
     var mutedImp = props.muted ? "&mute=1" : "";
-    var announceWatch = props.announce || "Watch";
     var format = props.webp ? 'webp' : 'jpg';
     var vi = props.webp ? 'vi_webp' : 'vi';
-    var posterUrl = !props.playlist ?
-        "https://i.ytimg.com/" + vi + "/" + videoId + "/" + posterImp + "." + format :
-        "https://i.ytimg.com/" + vi + "/" + videoPlaylisCovertId + "/" + posterImp + "." + format;
+    var posterUrl = props.thumbnail || (!props.playlist
+        ? "https://i.ytimg.com/".concat(vi, "/").concat(videoId, "/").concat(posterImp, ".").concat(format)
+        : "https://i.ytimg.com/".concat(vi, "/").concat(videoPlaylisCovertId, "/").concat(posterImp, ".").concat(format));
     var ytUrl = props.noCookie
         ? "https://www.youtube-nocookie.com"
         : "https://www.youtube.com";
@@ -59,27 +32,29 @@ function LiteYouTubeEmbed(props) {
         ? "https://www.youtube.com"
         : "https://www.youtube-nocookie.com";
     var iframeSrc = !props.playlist
-        ? ytUrl + "/embed/" + videoId + "?autoplay=1&state=1" + mutedImp + paramsImp
-        : ytUrl + "/embed/videoseries?autoplay=1" + mutedImp + "&list=" + videoId + paramsImp;
-    var activatedClassImp = props.activatedClass || "lyt-activated";
+        ? "".concat(ytUrl, "/embed/").concat(videoId, "?autoplay=1&state=1").concat(mutedImp).concat(paramsImp)
+        : "".concat(ytUrl, "/embed/videoseries?autoplay=1").concat(mutedImp, "&list=").concat(videoId).concat(paramsImp);
     var adNetworkImp = props.adNetwork || false;
-    var aspectHeight = props.aspectHeight || 9;
-    var aspectWidth = props.aspectWidth || 16;
     var iframeClassImp = props.iframeClass || "";
-    var playerClassImp = props.playerClass || "lty-playbtn";
-    var wrapperClassImp = props.wrapperClass || "yt-lite";
     var onIframeAdded = props.onIframeAdded || function () { };
-    var warmConnections = function () {
-        if (preconnected)
-            return;
+    var height = props.height || "560";
+    var width = props.width || "315";
+    /*
+      const warmConnections = () => {
+        if (preconnected) return;
         setPreconnected(true);
-    };
-    var addIframe = function () {
-        if (iframe)
-            return;
-        onIframeAdded();
+      };
+    
+      const addIframe = () => {
+        if (iframe) return;
         setIframe(true);
-    };
+      };
+    */
+    React.useEffect(function () {
+        if (iframe) {
+            onIframeAdded();
+        }
+    }, [iframe]);
     return (React.createElement(React.Fragment, null,
         React.createElement("link", { rel: "preload", href: posterUrl, as: "image" }),
         React.createElement(React.Fragment, null, preconnected && (React.createElement(React.Fragment, null,
@@ -88,11 +63,7 @@ function LiteYouTubeEmbed(props) {
             adNetworkImp && (React.createElement(React.Fragment, null,
                 React.createElement("link", { rel: "preconnect", href: "https://static.doubleclick.net" }),
                 React.createElement("link", { rel: "preconnect", href: "https://googleads.g.doubleclick.net" })))))),
-        React.createElement("article", { onPointerOver: warmConnections, onClick: addIframe, className: wrapperClassImp + " " + (iframe ? activatedClassImp : ""), "data-title": videoTitle, style: __assign({ backgroundImage: "url(" + posterUrl + ")" }, {
-                '--aspect-ratio': (aspectHeight / aspectWidth) * 100 + "%",
-            }) },
-            React.createElement("button", { className: playerClassImp, "aria-label": announceWatch + " " + videoTitle }),
-            iframe && (React.createElement("iframe", { className: iframeClassImp, title: videoTitle, width: "560", height: "315", frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowFullScreen: true, src: iframeSrc })))));
+        React.createElement("iframe", { className: iframeClassImp, title: videoTitle, width: width, height: height, frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowFullScreen: true, src: iframeSrc })));
 }
 
 export { LiteYouTubeEmbed as default };

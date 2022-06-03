@@ -28,20 +28,19 @@ interface LiteYouTube {
   onIframeAdded?: () => void
   muted?: boolean,
   thumbnail?: string,
-  height?: int,
-  width?: int,
+  height?: number,
+  width?: number,
 }
 
 export default function LiteYouTubeEmbed(props: LiteYouTube) {
-  const [preconnected, setPreconnected] = React.useState(false);
-  const [iframe, setIframe] = React.useState(false);
+  const [preconnected] = React.useState(false);
+  const [iframe] = React.useState(false);
   const videoId = encodeURIComponent(props.id);
   const videoPlaylisCovertId = typeof props.playlistCoverId === 'string' ? encodeURIComponent(props.playlistCoverId) : null;
   const videoTitle = props.title;
   const posterImp = props.poster || "hqdefault";
   const paramsImp = `&${props.params}` || "";
   const mutedImp = props.muted ? "&mute=1" : "";
-  const announceWatch = props.announce || "Watch";
   const format = props.webp ? 'webp' : 'jpg';
   const vi = props.webp ? 'vi_webp' : 'vi'
   const posterUrl = props.thumbnail || (!props.playlist 
@@ -59,17 +58,13 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
     ? `${ytUrl}/embed/${videoId}?autoplay=1&state=1${mutedImp}${paramsImp}`
     : `${ytUrl}/embed/videoseries?autoplay=1${mutedImp}&list=${videoId}${paramsImp}`;
 
-  const activatedClassImp = props.activatedClass || "lyt-activated";
   const adNetworkImp = props.adNetwork || false;
-  const aspectHeight = props.aspectHeight || 9;
-  const aspectWidth = props.aspectWidth || 16;
   const iframeClassImp = props.iframeClass || "";
-  const playerClassImp = props.playerClass || "lty-playbtn";
-  const wrapperClassImp = props.wrapperClass || "yt-lite";
   const onIframeAdded = props.onIframeAdded || function () { };
   const height = props.height || "560";
   const width = props.width || "315";
 
+/*
   const warmConnections = () => {
     if (preconnected) return;
     setPreconnected(true);
@@ -79,7 +74,7 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
     if (iframe) return;
     setIframe(true);
   };
-
+*/
   React.useEffect(() => {
     if (iframe) {
       onIframeAdded();
@@ -113,8 +108,8 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
       <iframe
         className={iframeClassImp}
         title={videoTitle}
-        width=width
-        height=height
+        width={width}
+        height={height}
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

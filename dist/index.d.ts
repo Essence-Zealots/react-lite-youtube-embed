@@ -1,4 +1,4 @@
-declare type imgResolution = "default" | "mqdefault" | "hqdefault" | "sddefault" | "maxresdefault";
+export declare type imgResolution = "default" | "mqdefault" | "hqdefault" | "sddefault" | "maxresdefault";
 interface LiteYouTube {
     announce?: string;
     id: string;
@@ -19,6 +19,9 @@ interface LiteYouTube {
     wrapperClass?: string;
     onIframeAdded?: () => void;
     muted?: boolean;
+    thumbnail?: string;
+    height?: number;
+    width?: number;
 }
 export default function LiteYouTubeEmbed(props: LiteYouTube): JSX.Element;
 export {};
