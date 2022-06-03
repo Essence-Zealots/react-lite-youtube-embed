@@ -20,8 +20,8 @@ interface LiteYouTube {
     onIframeAdded?: () => void;
     muted?: boolean;
     thumbnail?: string;
-    height?: number;
-    width?: number;
+    height?: number | string;
+    width?: number | string;
 }
 export default function LiteYouTubeEmbed(props: LiteYouTube): JSX.Element;
 export {};
