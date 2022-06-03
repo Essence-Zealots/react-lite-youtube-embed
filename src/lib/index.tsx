@@ -28,6 +28,8 @@ interface LiteYouTube {
   onIframeAdded?: () => void
   muted?: boolean,
   thumbnail?: string,
+  height?: int,
+  width?: int,
 }
 
 export default function LiteYouTubeEmbed(props: LiteYouTube) {
@@ -65,6 +67,8 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
   const playerClassImp = props.playerClass || "lty-playbtn";
   const wrapperClassImp = props.wrapperClass || "yt-lite";
   const onIframeAdded = props.onIframeAdded || function () { };
+  const height = props.height || "560";
+  const width = props.width || "315";
 
   const warmConnections = () => {
     if (preconnected) return;
@@ -106,34 +110,16 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
           </>
         )}
       </>
-      <article
-        onPointerOver={warmConnections}
-        onClick={addIframe}
-        className={`${wrapperClassImp} ${iframe ? activatedClassImp : ""}`}
-        data-title={videoTitle}
-        style={{
-          backgroundImage: `url(${posterUrl})`,
-          ...({
-            '--aspect-ratio': `${(aspectHeight / aspectWidth) * 100}%`,
-          } as React.CSSProperties),
-        }}
-      >
-        <button
-          className={playerClassImp}
-          aria-label={`${announceWatch} ${videoTitle}`} />
-        {iframe && (
-          <iframe
-            className={iframeClassImp}
-            title={videoTitle}
-            width="560"
-            height="315"
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            src={iframeSrc}
-          ></iframe>
-        )}
-      </article>
+      <iframe
+        className={iframeClassImp}
+        title={videoTitle}
+        width=width
+        height=height
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        src={iframeSrc}
+      ></iframe>
     </>
   );
 }
