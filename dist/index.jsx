@@ -54,8 +54,8 @@ function LiteYouTubeEmbed(props) {
         ? "https://www.youtube.com"
         : "https://www.youtube-nocookie.com";
     var iframeSrc = !props.playlist
-        ? "".concat(ytUrl, "/embed/").concat(videoId, "?autoplay=1&state=1").concat(mutedImp).concat(paramsImp)
-        : "".concat(ytUrl, "/embed/videoseries?autoplay=1").concat(mutedImp, "&list=").concat(videoId).concat(paramsImp);
+        ? "".concat(ytUrl, "/embed/").concat(videoId, "?state=1").concat(mutedImp).concat(paramsImp)
+        : "".concat(ytUrl, "/embed/videoseries?").concat(mutedImp, "&list=").concat(videoId).concat(paramsImp);
     var adNetworkImp = props.adNetwork || false;
     var iframeClassImp = props.iframeClass || "";
     var onIframeAdded = props.onIframeAdded || function () { };

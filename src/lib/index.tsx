@@ -55,8 +55,8 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
     : "https://www.youtube-nocookie.com";
 
   const iframeSrc = !props.playlist
-    ? `${ytUrl}/embed/${videoId}?autoplay=1&state=1${mutedImp}${paramsImp}`
-    : `${ytUrl}/embed/videoseries?autoplay=1${mutedImp}&list=${videoId}${paramsImp}`;
+    ? `${ytUrl}/embed/${videoId}?state=1${mutedImp}${paramsImp}`
+    : `${ytUrl}/embed/videoseries?${mutedImp}&list=${videoId}${paramsImp}`;
 
   const adNetworkImp = props.adNetwork || false;
   const iframeClassImp = props.iframeClass || "";
