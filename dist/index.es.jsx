@@ -63,7 +63,7 @@ function LiteYouTubeEmbed(props) {
             adNetworkImp && (React.createElement(React.Fragment, null,
                 React.createElement("link", { rel: "preconnect", href: "https://static.doubleclick.net" }),
                 React.createElement("link", { rel: "preconnect", href: "https://googleads.g.doubleclick.net" })))))),
-        React.createElement("iframe", { className: iframeClassImp, title: videoTitle, width: width, height: height, frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowFullScreen: true, src: iframeSrc })));
+        React.createElement("iframe", { className: iframeClassImp, title: videoTitle, width: width, height: height, frameBorder: "0", allow: "encrypted-media; picture-in-picture", allowFullScreen: true, src: iframeSrc })));
 }
 
 export { LiteYouTubeEmbed as default };

@@ -1,4 +1,11 @@
- <div align="center">
+Note to self: Use
+```bash
+rollup -c
+```
+to rebuild after changing the lib folder.
+
+
+<div align="center">
 
   <h1>📺  React Lite YouTube Embed</h1>
   <blockquote>A private by default, faster and cleaner YouTube embed component for React applications</blockquote>

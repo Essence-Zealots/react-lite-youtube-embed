@@ -111,10 +111,11 @@ export default function LiteYouTubeEmbed(props: LiteYouTube) {
         width={width}
         height={height}
         frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allow="encrypted-media; picture-in-picture"
         allowFullScreen
         src={iframeSrc}
       ></iframe>
     </>
   );
 }
+
